@@ -28,6 +28,7 @@ func main() {
 	route.GET("/mahasiswa", controller.TampilData)
 	route.POST("/mahasiswa", controller.TambahMahasiswa)
 	route.PUT("/mahasiswa/:nim", controller.EditMahasiswa)
+	route.DELETE("/mahasiswa/:nim", controller.HapusMahasiswa)
 
 	// run server
 	log.Println("Server berjalan pada http://localhost:8080")

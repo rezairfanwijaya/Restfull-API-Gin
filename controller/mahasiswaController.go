@@ -107,6 +107,8 @@ func EditMahasiswa(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": errMessage,
 		})
+
+		return
 	}
 
 	// jika ada bikin variable penampung inputan berupa stuct MahasiswaInput
@@ -153,4 +155,33 @@ func EditMahasiswa(c *gin.Context) {
 		"status": "Data mahasiswa berhasil diubah",
 	})
 
+}
+
+// function untuk menghapus data mahasiswa
+func HapusMahasiswa(c *gin.Context) {
+	// mengambil koneksi database melalui context
+	db := c.MustGet("db").(*gorm.DB)
+
+	// cek apakah ada data yang ingin dihapus
+	// inisiasi variable data mahsiswa
+	var mhs models.Mahasiswa
+	err := db.Where("nim = ?", c.Param("nim")).First(&mhs).Error
+
+	// cek error ketika tidak ada data yang mau dihapus
+	if err != nil {
+		errMessage := fmt.Sprintf("Data mahasiswa dengan nim %s tidak ditemukan", c.Param("nim"))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": errMessage,
+		})
+
+		return
+	}
+
+	// jika ada maka hapus data dari database
+	db.Delete(&mhs)
+
+	// tampilkan response ke user
+	c.JSON(http.StatusOK, gin.H{
+		"status": "Data mahasiswa berhasil dihapus",
+	})
 }
