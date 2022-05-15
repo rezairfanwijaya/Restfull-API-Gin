@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"restfull-api/handler"
+	"restfull-api/controller"
 	"restfull-api/models"
 
 	"github.com/gin-gonic/gin"
@@ -23,8 +23,9 @@ func main() {
 		c.Next() // jika koneksi sudah berhasil maka lanjutkan ke handler
 	})
 
-	// definisi router dan route handler (di import dari handler/handler.go)
-	route.GET("/", handler.IndexHandler)
+	// definisi router dan route handler (di import dari controller)
+	route.GET("/", controller.Home)
+	route.GET("/mahasiswa", controller.TampilData)
 
 	// run server
 	log.Println("Server berjalan pada http://localhost:8080")
