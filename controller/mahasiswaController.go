@@ -90,3 +90,67 @@ func TambahMahasiswa(c *gin.Context) {
 	})
 
 }
+
+// function untuk mengedit data mahasiswa
+func EditMahasiswa(c *gin.Context) {
+	// mengambil koneksi database melalui context
+	db := c.MustGet("db").(*gorm.DB)
+
+	// cek dulu apakah data yang mau diubah itu ada atau tidak (berdasar nim)
+	// inisiasi variable data mahsiswa
+	var mhs models.Mahasiswa
+	err := db.Where("nim = ?", c.Param("nim")).First(&mhs).Error
+
+	// cek error ketika tidak ada data yang mau diubah
+	if err != nil {
+		errMessage := fmt.Sprintf("Data mahasiswa dengan nim %s tidak ditemukan", c.Param("nim"))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": errMessage,
+		})
+	}
+
+	// jika ada bikin variable penampung inputan berupa stuct MahasiswaInput
+	var input MahasiswaInput
+
+	// ambil data dari user melalui inputan json dan harus melalui inputan json
+	err = c.ShouldBindJSON(&input)
+
+	// cek error (disini akan menggunakan custom error menggunakan bantuan validator)
+	if err != nil {
+
+		// bikin variable penampung error
+		var myerr []string
+
+		for _, e := range err.(validator.ValidationErrors) {
+			// buat pesan error
+			errorMessage := fmt.Sprintf("Error on filed:%s, condition:%s", e.Field(), e.ActualTag())
+			// append error
+			myerr = append(myerr, errorMessage)
+		}
+
+		// tampilkan error
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": myerr,
+		})
+
+		// matikan kode
+		return
+
+	}
+
+	// jika tidak ada error maka inputkan data ke database
+	updatedMhs := models.Mahasiswa{
+		Nim:     input.Nim,
+		Nama:    input.Nama,
+		Jurusan: input.Jurusan,
+	}
+
+	// proses update ke database
+	db.Model(&mhs).Updates(updatedMhs)
+
+	// tampilkan response ke user
+	c.JSON(http.StatusOK, gin.H{
+		"status": "Data mahasiswa berhasil diubah",
+	})
+
+}
