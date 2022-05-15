@@ -26,6 +26,7 @@ func main() {
 	// definisi router dan route handler (di import dari controller)
 	route.GET("/", controller.Home)
 	route.GET("/mahasiswa", controller.TampilData)
+	route.POST("/mahasiswa", controller.TambahMahasiswa)
 
 	// run server
 	log.Println("Server berjalan pada http://localhost:8080")
