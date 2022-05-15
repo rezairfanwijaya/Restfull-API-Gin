@@ -8,7 +8,7 @@ import (
 )
 
 func Connect() *gorm.DB {
-	dsn := "root:@tcp(localhost:3306)/restfull-api?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:@tcp(localhost:3306)/restfull-api-gin-go?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	// cek error
