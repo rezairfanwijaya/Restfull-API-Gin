@@ -74,7 +74,19 @@ func TambahMahasiswa(c *gin.Context) {
 
 	}
 
-	// jika tidak ada error maka inputkan data ke database
+	// cek apakah data yang akan diinput susah ada di database? jika ada maka batalkan proses input dan tampilkan pesan gagal input
+	if db.Where("nim = ?", input.Nim).First(&models.Mahasiswa{}); err == nil {
+		// kirim response error
+		msgError := fmt.Sprintf("Data mahasiswa dengan nim %s sudah ada", input.Nim)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": msgError,
+		})
+
+		// matikan kode
+		return
+	}
+
+	// jika data tidak duplikat maka lakukan proses input data
 	newMhs := models.Mahasiswa{
 		Nim:     input.Nim,
 		Nama:    input.Nama,
