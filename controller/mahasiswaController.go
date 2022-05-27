@@ -29,9 +29,11 @@ func TampilData(c *gin.Context) {
 
 	// query ke database
 	db.Find(&mhs)
+	total := len(mhs)
 
 	// kirim response ke user
 	c.JSON(http.StatusOK, gin.H{
+		"all":  total,
 		"data": mhs,
 	})
 
