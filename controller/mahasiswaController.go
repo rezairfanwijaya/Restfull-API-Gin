@@ -48,6 +48,9 @@ func TambahMahasiswa(c *gin.Context) {
 	// bikin variable penampung inputan user
 	var input MahasiswaInput
 
+	// deklarasi model mahasiswa
+	var mhs models.Mahasiswa
+
 	// ambil data dari user melalui inputan json dan harus melalui inputan json
 	err := c.ShouldBindJSON(&input)
 
@@ -75,7 +78,8 @@ func TambahMahasiswa(c *gin.Context) {
 	}
 
 	// cek apakah data yang akan diinput susah ada di database? jika ada maka batalkan proses input dan tampilkan pesan gagal input
-	if db.Where("nim = ?", input.Nim).First(&models.Mahasiswa{}); err == nil {
+	db.Where("nim = ?", input.Nim).First(&mhs)
+	if mhs.Nim != "" {
 		// kirim response error
 		msgError := fmt.Sprintf("Data mahasiswa dengan nim %s sudah ada", input.Nim)
 		c.JSON(http.StatusBadRequest, gin.H{
