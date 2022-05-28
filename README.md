@@ -8,7 +8,10 @@ git clone https://github.com/rezairfanwijaya/Restfull-API-Gin
 
 ### 2. Masuk Ke Direktori
 ```
-```
 cd Restfull-API-Gin
 ```
-Lalu setalah berhasil melakukan clone, silahkan untuk membuat database dengan nama `restfull_api_gin_go` pada `mysql`
+
+### 3. Membuat Database
+```
+CREATE DATABASE restfull_api_gin_mysql;
+```
