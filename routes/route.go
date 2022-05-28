@@ -22,5 +22,6 @@ func Setup(App *gin.Engine) {
 		Auth.POST("/mahasiswa", controller.TambahMahasiswa)
 		Auth.PUT("/mahasiswa/:nim", controller.EditMahasiswa)
 		Auth.DELETE("/mahasiswa/:nim", controller.HapusMahasiswa)
+		Auth.GET("/logout", controller.Logout)
 	}
 }

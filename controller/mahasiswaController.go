@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"restfull-api/models"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -201,5 +202,19 @@ func HapusMahasiswa(c *gin.Context) {
 	// tampilkan response ke user
 	c.JSON(http.StatusOK, gin.H{
 		"status": "Data mahasiswa berhasil dihapus",
+	})
+}
+
+func Logout(c *gin.Context) {
+	cookie := http.Cookie{
+		Name:    "jwt",
+		Value:   "",
+		Expires: time.Now().Add(time.Hour * -1),
+	}
+
+	http.SetCookie(c.Writer, &cookie)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "Logout berhasil",
 	})
 }
