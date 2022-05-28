@@ -7,9 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 func Connect() *gorm.DB {
 	dsn := "root:@tcp(localhost:3306)/restfull_api_gin_go?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	// cek error
 	if err != nil {
@@ -18,8 +20,11 @@ func Connect() *gorm.DB {
 	}
 
 	// jika berhasil maka lakukan migration models
-	db.AutoMigrate(&Mahasiswa{})
+	conn.AutoMigrate(&Mahasiswa{})
+	conn.AutoMigrate(&Sisfo{})
+
+	DB = conn
 
 	// return
-	return db
+	return DB
 }

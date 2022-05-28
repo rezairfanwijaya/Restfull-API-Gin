@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"restfull-api/controller"
 	"restfull-api/models"
+	"restfull-api/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,11 +24,7 @@ func main() {
 	})
 
 	// definisi router dan route handler (di import dari controller)
-	route.GET("/", controller.Home)
-	route.GET("/mahasiswa", controller.TampilData)
-	route.POST("/mahasiswa", controller.TambahMahasiswa)
-	route.PUT("/mahasiswa/:nim", controller.EditMahasiswa)
-	route.DELETE("/mahasiswa/:nim", controller.HapusMahasiswa)
+	routes.Setup(route)
 
 	// run server
 	log.Println("Server berjalan pada http://localhost:8080")
