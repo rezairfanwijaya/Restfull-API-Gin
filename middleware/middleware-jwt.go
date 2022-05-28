@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"restfull-api/controller"
+
 	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +21,7 @@ func MiddlewareJWT(c *gin.Context) {
 
 	// ambil token
 	jwtToken, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte("secret123"), nil
+		return []byte(controller.KEY), nil
 	})
 	if err != nil {
 		c.JSON(401, gin.H{
