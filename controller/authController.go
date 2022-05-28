@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"restfull-api/models"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go/v4"
@@ -146,9 +147,12 @@ func Login(c *gin.Context) {
 	// buatkan claims
 	exp := time.Now().Add(time.Hour * 24)
 	id := sisfo.ID
+	idStr := strconv.Itoa(id)
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		ExpiresAt: &jwt.Time{exp},
-		Issuer:    string(id),
+		ExpiresAt: &jwt.Time{
+			Time: exp,
+		},
+		Issuer: idStr,
 	})
 
 	// tanda tangani claim
