@@ -11,7 +11,10 @@ git clone https://github.com/rezairfanwijaya/Restfull-API-Gin
 cd Restfull-API-Gin
 ```
 
-### 3. Membuat Database
+### 3. Membuat Database (Mysql)
+
 ```
-CREATE DATABASE restfull_api_gin_mysql;
+CREATE DATABASE restfull_api_gin_go;
 ```
+
+### LIST API
