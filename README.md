@@ -3,3 +3,7 @@ Repository ini dibuat menggunakan [Golang](https://go.dev/), [Gin](https://gin-g
 ```
 git clone https://github.com/rezairfanwijaya/Restfull-API-Gin
 ```
+```
+cd Restfull-API-Gin
+```
+Lalu setalah berhasil melakukan clone, silahkan untuk membuat database dengan nama `restfull_api_gin_go` pada `mysql`
